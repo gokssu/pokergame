@@ -11,5 +11,7 @@ class PlayerModel{
   String playerName;
   //player is winner situaition
   bool isWinner;
-  PlayerModel({required this.playerChoosenCard,required this.playerHand,required this.playerName,required this.isWinner});
+
+  bool handOpen;
+  PlayerModel({required this.playerChoosenCard,required this.playerHand,required this.playerName,required this.isWinner,required this.handOpen});
 }
