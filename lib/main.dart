@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   final Store<AppState> _store = Store<AppState>(
     PlayGame,
     initialState: AppState(
-      deckModel: DeckModel(deckList: DeckModel.generalList),
+      deckModel: DeckModel(deckList: AppStatic.generalList),
       players: PlayerModel.players
     ),
   );

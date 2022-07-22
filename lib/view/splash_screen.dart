@@ -25,6 +25,17 @@ class _SplashScreenState extends State<SplashScreen> {
   TextEditingController player1 = new TextEditingController();
   TextEditingController player2 = new TextEditingController();
 
+  playGame(){
+    if (player1.text != "" && player2.text != ""&&player2.text!=player1.text) {
+      StoreProvider.of<AppState>(context).dispatch(DefinePlayerNameAction(player1.text, player2.text),);
+      StoreProvider.of<AppState>(context).dispatch(
+        DistributeCardsAction(DeckModel(deckList: AppStatic.generalList)),
+      );
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => GameScreen()), (route) => false);
+    } else {
+      Toast.show(StringValuesConstants.instance.enterName, duration: Toast.lengthShort, gravity: Toast.center);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,28 +93,14 @@ class _SplashScreenState extends State<SplashScreen> {
                         ),
                         Padding(
                           padding: PaddingConstants.instance.onlyTop,
-                          child: StoreConnector<AppState, AppState>(
-                            converter: (store) => store.state,
-                            builder: (context, stateModel) => GradientButton(
+                          child: GradientButton(
                               widthButton: context.dynamicMultiWidth(0.3),
                               heightButton: context.dynamicMultiHeight(0.07),
-                              onPressFunc: () {
-                                if (player1.text != "" && player2.text != "") {
-                                  StoreProvider.of<AppState>(context).reducer(stateModel,DefinePlayerNameAction(player1.text, player2.text),);
-                                  StoreProvider.of<AppState>(context).dispatch(
-                                    DistributeCardsAction(DeckModel(deckList: DeckModel.generalList)),
-                                  );
-                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => GameScreen()), (route) => false);
-                                } else {
-                                  Toast.show(StringValuesConstants.instance.enterName, duration: Toast.lengthShort, gravity: Toast.center);
-                                }
-                              },
+                              onPressFunc: playGame,
                               startColor: ColorConstants.instance.graStart,
                               endColor: ColorConstants.instance.graEnd,
                               title: StringValuesConstants.instance.startGame,
-                            ),
-                          ),
-                        ),
+                            ),)
                       ],
                     ),
                   ))

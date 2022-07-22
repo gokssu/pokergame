@@ -1,3 +1,4 @@
+import 'package:pokergame/store/card_model.dart';
 import 'package:pokergame/store/deck_model.dart';
 import 'package:pokergame/store/hand_model.dart';
 
@@ -12,7 +13,11 @@ class ChangeHandAction {
   final PlayerModel playerModel;
   ChangeHandAction(this.playerModel);
 }
-
+class AddChosenCard {
+  final CardModel card;
+  final String playerName;
+  AddChosenCard(this.card,this.playerName);
+}
 class ShowHandAction {
   final String showPlayerName;
   ShowHandAction(this.showPlayerName);

@@ -26,15 +26,15 @@ void main() {
             isWinner: false,
             handOpen: false,
           ),
-        ], deckModel: DeckModel(deckList: DeckModel.generalList)),
-        DistributeCardsAction(DeckModel(deckList: DeckModel.generalList)));
+        ], deckModel: DeckModel(deckList: AppStatic.generalList)),
+        DistributeCardsAction(DeckModel(deckList: AppStatic.generalList)));
 
     expect(distrubitionstate.deckModel.deckList.length, 42);
   });
 
   test('Define Player Name test', () {
     final nameState = PlayGame(
-        AppState(players: PlayerModel.players, deckModel: DeckModel(deckList: DeckModel.generalList)),
+        AppState(players: PlayerModel.players, deckModel: DeckModel(deckList: AppStatic.generalList)),
         DefinePlayerNameAction("Player A", "Player B"));
 
     expect(nameState.players.first.playerName, "Player A");
@@ -56,7 +56,7 @@ void main() {
   });
 
   test('Changing Hand Cards test', () {
-    DeckModel deckModelInitial = DeckModel(deckList: DeckModel.generalList);
+    DeckModel deckModelInitial = DeckModel(deckList: AppStatic.generalList);
     //Hearts A-Spades A- Spades 4
     List<CardModel> hand = [
       CardModel(kind: "Spades", index: 14, isOpen: false),
@@ -95,7 +95,7 @@ void main() {
   });
 
   test('Show Hand Test', () {
-    DeckModel deckModelInitial = DeckModel(deckList: DeckModel.generalList);
+    DeckModel deckModelInitial = DeckModel(deckList: AppStatic.generalList);
     //Hearts A-Spades A- Spades 4
     List<CardModel> hand1 = [
       CardModel(kind: "Spades", index: 14, isOpen: false),
@@ -142,7 +142,7 @@ void main() {
   });
 
   test('Compare Hand test', () {
-    DeckModel deckModelInitial = DeckModel(deckList: DeckModel.generalList);
+    DeckModel deckModelInitial = DeckModel(deckList: AppStatic.generalList);
     //Hearts A-Spades A- Spades 4
     List<CardModel> hand1 = [
       CardModel(kind: "Spades", index: 14, isOpen: false),

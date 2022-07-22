@@ -4,10 +4,13 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:pokergame/store/deck_model.dart';
 import 'package:pokergame/store/player_model.dart';
 import 'package:pokergame/view/constants/context_extension.dart';
+import 'package:pokergame/view/splash_screen.dart';
 import 'package:pokergame/view/widgets/background_widget.dart';
 import 'package:pokergame/view/widgets/gradient_button.dart';
 import 'package:pokergame/view/widgets/hand_widget.dart';
 
+import '../main.dart';
+import '../redux/actions.dart';
 import '../redux/app_state.dart';
 import 'constants/color.dart';
 import 'constants/size.dart';
@@ -43,12 +46,18 @@ class _GameScreenState extends State<GameScreen> {
                         Padding(
                           padding: PaddingConstants.instance.onlyRightMin,
                           child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.replay,
+                            splashColor: Colors.white,
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SplashScreen()));
+                              },
+                              icon:  Icon(
+                                Icons.logout,
                                 size: Sizes.iconSizeMax,
                                 color: ColorConstants.instance.white,
-                              )),
+                              ) ),
                         )
                       ],
                     ),
@@ -74,7 +83,9 @@ class _GameScreenState extends State<GameScreen> {
                           child: GradientButton(
                             widthButton: context.dynamicMultiWidth(0.4),
                             heightButton: context.dynamicMultiHeight(0.06),
-                            onPressFunc: () {},
+                            onPressFunc: () {
+                                StoreProvider.of<AppState>(context).dispatch(ComparePlayerAction(stateModel.players),);
+                            },
                             startColor: ColorConstants.instance.graStart2,
                             endColor: ColorConstants.instance.blueColor,
                             title: StringValuesConstants.instance.compHand,
@@ -83,58 +94,31 @@ class _GameScreenState extends State<GameScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: context.dynamicMultiWidth(0.95),
-                    height: context.dynamicMultiHeight(0.1),
-                    child: Column(
-                      children: [
-                        Visibility(
-                          visible: true,
-                          child: showCards(stateModel.players.first.playerName),
-                        ),
-                        Visibility(
-                          visible: false,
-                          child: chooseCard(),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: context.dynamicMultiWidth(0.95),
-                    height: context.dynamicMultiHeight(0.25),
-                    child: Padding(
-                      padding: PaddingConstants.instance.onlyBottom,
-                      child: HandWidget(),
-                    ),
-                  ),
                   Visibility(
-                    visible: false,
+                    visible: stateModel.players.first.isWinner==false&&stateModel.players[1].isWinner==false,
                     child: SizedBox(
                       width: context.dynamicMultiWidth(0.95),
-                      height: context.dynamicMultiHeight(0.07),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("Player A " + StringValuesConstants.instance.winner, style: Theme.of(context).textTheme.headline3),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: context.dynamicMultiWidth(0.95),
-                    height: context.dynamicMultiHeight(0.1),
-                    child: Padding(
-                      padding: PaddingConstants.instance.onlyTopMin,
+                      height: context.dynamicMultiHeight(0.1),
                       child: Column(
                         children: [
                           Visibility(
-                            visible: true,
-                            child: showCards(stateModel.players[1].playerName),
+                            visible: !stateModel.players.first.handOpen,
+                            child: showCards(stateModel.players.first.playerName,(){
+                              if(stateModel.players.first.playerChoosenCard.isNotEmpty){
+                                if(stateModel.players.first.playerChoosenCard.first.index!=0){
+                                  StoreProvider.of<AppState>(context).dispatch(ShowHandAction(stateModel.players.first.playerName),);
+                                }
+                              }else{
+                                StoreProvider.of<AppState>(context).dispatch(ShowHandAction(stateModel.players.first.playerName),);
+                              }
+                            }),
                           ),
                           Visibility(
-                            visible: false,
-                            child: chooseCard(),
+                            visible: stateModel.players.first.handOpen,
+                            child: chooseCard(stateModel.players.first.playerHand.name,(){
+                              StoreProvider.of<AppState>(context).dispatch(ChangeHandAction(stateModel.players.first),);
+
+                            }),
                           )
                         ],
                       ),
@@ -143,7 +127,61 @@ class _GameScreenState extends State<GameScreen> {
                   SizedBox(
                     width: context.dynamicMultiWidth(0.95),
                     height: context.dynamicMultiHeight(0.25),
-                    child: HandWidget(),
+                    child: Padding(
+                      padding: PaddingConstants.instance.onlyBottom,
+                      child: HandWidget(stateModel.players.first),
+                    ),
+                  ),
+                  Visibility(
+                    visible: stateModel.players.first.isWinner!=false||stateModel.players[1].isWinner!=false,
+                    child: SizedBox(
+                      width: context.dynamicMultiWidth(0.95),
+                      height: context.dynamicMultiHeight(0.07),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(getWinnerString(stateModel.players)+"  " + StringValuesConstants.instance.winner, style: Theme.of(context).textTheme.headline3),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: stateModel.players.first.isWinner==false&&stateModel.players[1].isWinner==false,
+                    child: SizedBox(
+                      width: context.dynamicMultiWidth(0.95),
+                      height: context.dynamicMultiHeight(0.1),
+                      child: Padding(
+                        padding: PaddingConstants.instance.onlyTopMin,
+                        child: Column(
+                          children: [
+                            Visibility(
+                              visible: !stateModel.players[1].handOpen,
+                              child: showCards(stateModel.players[1].playerName,(){
+                                if(stateModel.players[1].playerChoosenCard.isNotEmpty){
+                                  if(stateModel.players[1].playerChoosenCard.first.index!=0){
+                                    StoreProvider.of<AppState>(context).dispatch(ShowHandAction(stateModel.players[1].playerName),);
+                                  }
+                                }else{
+                                  StoreProvider.of<AppState>(context).dispatch(ShowHandAction(stateModel.players[1].playerName),);
+                                }
+                              }),
+                            ),
+                            Visibility(
+                              visible: stateModel.players[1].handOpen,
+                              child: chooseCard(stateModel.players[1].playerHand.name,(){
+                                StoreProvider.of<AppState>(context).dispatch(ChangeHandAction(stateModel.players[1]),);
+                              }),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: context.dynamicMultiWidth(0.95),
+                    height: context.dynamicMultiHeight(0.25),
+                    child: HandWidget(stateModel.players[1]),
                   ),
                 ],
               ),
@@ -154,18 +192,18 @@ class _GameScreenState extends State<GameScreen> {
     ));
   }
 
-  Widget chooseCard() {
+  Widget chooseCard(String handName,Function tap) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        Text("Hand Name " + "\n" + StringValuesConstants.instance.chooseCard, style: Theme.of(context).textTheme.headline2),
+        Text("Hand: "+handName + "\n" + StringValuesConstants.instance.chooseCard, style: Theme.of(context).textTheme.headline2),
         Padding(
           padding: PaddingConstants.instance.onlyTop,
           child: GradientButton(
             widthButton: context.dynamicMultiWidth(0.4),
             heightButton: context.dynamicMultiHeight(0.05),
-            onPressFunc: () {},
+            onPressFunc: tap,
             startColor: ColorConstants.instance.button,
             endColor: ColorConstants.instance.button,
             title: StringValuesConstants.instance.changeCards,
@@ -175,7 +213,7 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
-  Widget showCards(String name) {
+  Widget showCards(String name,Function tap) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -186,7 +224,7 @@ class _GameScreenState extends State<GameScreen> {
           child: GradientButton(
             widthButton: context.dynamicMultiWidth(0.4),
             heightButton: context.dynamicMultiHeight(0.05),
-            onPressFunc: () {},
+            onPressFunc: tap,
             startColor: ColorConstants.instance.graStart2,
             endColor: ColorConstants.instance.graEnd2,
             title: StringValuesConstants.instance.showhand,
@@ -236,4 +274,16 @@ class _GameScreenState extends State<GameScreen> {
       ),
     );
   }
+
+ String getWinnerString(List<PlayerModel> players) {
+    String winner="";
+    if(players.first.isWinner&&players[1].isWinner==false){
+      winner=players.first.playerName;
+    }else if(players.first.isWinner==false&&players[1].isWinner){
+      winner=players[1].playerName;
+    }else{
+      winner="No one ";
+    }
+    return winner;
+ }
 }

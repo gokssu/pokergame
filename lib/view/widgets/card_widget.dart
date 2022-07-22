@@ -5,7 +5,10 @@ import 'package:pokergame/view/constants/context_extension.dart';
 import '../constants/color.dart';
 
 class CardWidget extends StatefulWidget {
-  const CardWidget({Key? key}) : super(key: key);
+  bool onTouch=false;
+  String image;
+  Function chooseCard;
+   CardWidget(this.onTouch,this.image,this.chooseCard);
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
@@ -14,35 +17,42 @@ class CardWidget extends StatefulWidget {
 class _CardWidgetState extends State<CardWidget> {
   @override
   Widget build(BuildContext context) {
-    return FlipCard(
-      fill: Fill.fillBack, // Fill the back side of the card to make in the same size as the front.
-      direction: FlipDirection.HORIZONTAL, // default
-      front:  Container(
-        width:context.dynamicMultiWidth(0.3),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: ColorConstants.instance.backgroudColor,width: 0,
+    return GestureDetector(
+      onTap: (){
+        widget.chooseCard();
+      },
+      child: FlipCard(
+        flipOnTouch:widget.onTouch ,
+        fill: Fill.fillBack, // Fill the back side of the card to make in the same size as the front.
+        direction: FlipDirection.HORIZONTAL, // default
+        front:  Container(
+          width:context.dynamicMultiWidth(0.3),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: ColorConstants.instance.backgroudColor,width: 0,
+            ),
+            borderRadius: BorderRadius.circular(5),
           ),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        padding: EdgeInsets.only(right: 2,),
-        child: Image.asset(
-          'assets/Clubs6.jpg',
-          fit: BoxFit.fitHeight,
-        ),
-      ),
-      back:Container(
-        width:context.dynamicMultiWidth(0.3),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: ColorConstants.instance.accentColor,width: 3,
+          padding: EdgeInsets.only(right: 2,),
+          child: Image.asset(
+            widget.image,
+            fit: BoxFit.fitHeight,
           ),
-          borderRadius: BorderRadius.circular(5),
         ),
-        padding: EdgeInsets.only(right: 2,),
-        child: Image.asset(
-          'assets/back_card.png',
-          fit: BoxFit.fitHeight,
+        back:Container(
+          width:context.dynamicMultiWidth(0.3),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: ColorConstants.instance.accentColor
+              ,width: 3,
+            ),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          padding: EdgeInsets.only(right: 2,),
+          child: Image.asset(
+            'assets/back_card.png',
+            fit: BoxFit.fitHeight,
+          ),
         ),
       ),
     );

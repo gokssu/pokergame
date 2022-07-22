@@ -12,6 +12,6 @@ class StringValuesConstants {
   final String chooseCard = "Choose Cards";
   final String changeCards = "Change Cards";
   final String done = "Done";
-  final String winner = "is Winner !";
-  final String enterName="Please enter player names.";
+  final String winner = "  is Winner !";
+  final String enterName="Please check player names.";
 }
