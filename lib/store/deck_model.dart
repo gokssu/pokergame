@@ -2,7 +2,11 @@ import 'card_model.dart';
 
 class DeckModel{
   //52 cards
-  List<CardModel> deckList=[
+  List<CardModel> deckList;
+
+  DeckModel({required this.deckList});
+
+  static List<CardModel> generalList=[
     CardModel(kind: "Clubs", index: 2, isOpen: false),
     CardModel(kind: "Clubs", index: 3, isOpen: false),
     CardModel(kind: "Clubs", index: 4, isOpen: false),

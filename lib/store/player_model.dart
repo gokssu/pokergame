@@ -9,7 +9,7 @@ class PlayerModel{
   HandModel playerHand;
   //player name
   String playerName;
-  //player is winner situaition
+  //player is winner situaition;
   bool isWinner;
 
   bool handOpen;
