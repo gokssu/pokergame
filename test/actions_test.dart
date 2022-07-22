@@ -34,22 +34,7 @@ void main() {
 
   test('Define Player Name test', () {
     final nameState = PlayGame(
-        AppState(players: [
-          PlayerModel(
-            playerChoosenCard: [],
-            playerHand: HandModel(name: "", cardlist: []),
-            playerName: "",
-            isWinner: false,
-            handOpen: false,
-          ),
-          PlayerModel(
-            playerChoosenCard: [],
-            playerHand: HandModel(name: "", cardlist: []),
-            playerName: "",
-            isWinner: false,
-            handOpen: false,
-          ),
-        ], deckModel: DeckModel(deckList: DeckModel.generalList)),
+        AppState(players: PlayerModel.players, deckModel: DeckModel(deckList: DeckModel.generalList)),
         DefinePlayerNameAction("Player A", "Player B"));
 
     expect(nameState.players.first.playerName, "Player A");
@@ -93,7 +78,7 @@ void main() {
       deckModelInitial.deckList.removeWhere((element) => element.index == item.index && element.kind == item.kind);
     }
 
-    final changingState = GameState(
+    final changingState = PlayGame(
         AppState(players: [
           testPlayer,
           PlayerModel(
@@ -134,7 +119,7 @@ void main() {
       deckModelInitial.deckList.removeWhere((element) => element.index == item.index && element.kind == item.kind);
     }
 
-    final showHand = GameState(
+    final showHand = PlayGame(
         AppState(players: [
           PlayerModel(
             playerChoosenCard: [],
@@ -196,7 +181,7 @@ void main() {
       ),
     ];
 
-    final winnerState = EndGame(
+    final winnerState = PlayGame(
         AppState(players: players, deckModel: DeckModel(deckList: deckModelInitial.deckList)),
         ComparePlayerAction(players));
 

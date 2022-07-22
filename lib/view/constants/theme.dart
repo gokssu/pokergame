@@ -5,7 +5,7 @@ import 'color.dart';
 
 class AppTheme {
   ThemeData get theme => ThemeData(
-        fontFamily: 'Poopins',
+        fontFamily: 'OswaldSemiBold',
         backgroundColor: ColorConstants.instance.backgroudColor,
         primaryColor: ColorConstants.instance.primaryColor,
         accentColor: ColorConstants.instance.accentColor,
@@ -34,33 +34,33 @@ class AppTheme {
         textTheme: TextTheme(
           headline1: TextStyle(
             fontSize: 14.0,
-            fontWeight: FontWeight.w500,
-            color: ColorConstants.instance.hintColor,
+            fontWeight: FontWeight.w600,
+            color: ColorConstants.instance.black,
           ),
           //ButtonTextStyle
           headline2: TextStyle(
             fontSize: 14.0,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w700,
             color: ColorConstants.instance.white,
           ),
           headline3: TextStyle(
             fontSize: 18.0,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w700,
             color: ColorConstants.instance.white,
           ),
           headline4: TextStyle(
             fontSize: 14.0,
-            fontWeight: FontWeight.w500,
-            color: ColorConstants.instance.hintColor,
+            fontWeight: FontWeight.w700,
+            color: ColorConstants.instance.black,
           ),
           subtitle1: TextStyle(
             fontSize: 12.0,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w700,
             color: ColorConstants.instance.textSubtitle,
           ),
           subtitle2: TextStyle(
             fontSize: 12.0,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w600,
             color: ColorConstants.instance.white,
           ),
         ),

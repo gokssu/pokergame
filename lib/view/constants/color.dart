@@ -22,7 +22,7 @@ class ColorConstants {
   final graStart = Color.fromRGBO(1, 156, 7, 1.0);
   final graEnd = Color.fromRGBO(0, 134, 6, 1.0);
 
-  final graStart2 =  Color.fromRGBO(167, 167, 167, 1.0);
-  final graEnd2 =  Color.fromRGBO(173, 172, 172, 1.0);
+  final graStart2 = Color.fromRGBO(254, 254, 254, 1.0);
+  final graEnd2 = Color.fromRGBO(216, 216, 216, 1.0);
 
 }
