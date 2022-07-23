@@ -5,8 +5,11 @@ import 'package:pokergame/store/hand_model.dart';
 import '../store/player_model.dart';
 
 class DistributeCardsAction {
-  final DeckModel deckModel;
-  DistributeCardsAction(this.deckModel);
+  DistributeCardsAction();
+}
+
+class Replay {
+  Replay();
 }
 
 class ChangeHandAction {

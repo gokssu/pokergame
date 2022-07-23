@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:pokergame/store/card_model.dart';
+import 'package:pokergame/store/deck_model.dart';
 import 'package:pokergame/store/player_model.dart';
 
 import '../store/hand_model.dart';
@@ -12,20 +13,74 @@ AppState PlayGame(AppState state, dynamic action) {
   if (action is DistributeCardsAction) {
     List<CardModel> cardsForHand1 = [];
     List<CardModel> cardsForHand2 = [];
+    DeckModel deckModel=DeckModel(deckList:[
+      CardModel(kind: "Clubs", index: 2, isOpen: false),
+      CardModel(kind: "Clubs", index: 3, isOpen: false),
+      CardModel(kind: "Clubs", index: 4, isOpen: false),
+      CardModel(kind: "Clubs", index: 5, isOpen: false),
+      CardModel(kind: "Clubs", index: 6, isOpen: false),
+      CardModel(kind: "Clubs", index: 7, isOpen: false),
+      CardModel(kind: "Clubs", index: 8, isOpen: false),
+      CardModel(kind: "Clubs", index: 9, isOpen: false),
+      CardModel(kind: "Clubs", index: 10, isOpen: false),
+      CardModel(kind: "Clubs", index: 11, isOpen: false),
+      CardModel(kind: "Clubs", index: 12, isOpen: false),
+      CardModel(kind: "Clubs", index: 13, isOpen: false),
+      CardModel(kind: "Clubs", index: 14, isOpen: false),
+      CardModel(kind: "Diamonds", index: 2, isOpen: false),
+      CardModel(kind: "Diamonds", index: 3, isOpen: false),
+      CardModel(kind: "Diamonds", index: 4, isOpen: false),
+      CardModel(kind: "Diamonds", index: 5, isOpen: false),
+      CardModel(kind: "Diamonds", index: 6, isOpen: false),
+      CardModel(kind: "Diamonds", index: 7, isOpen: false),
+      CardModel(kind: "Diamonds", index: 8, isOpen: false),
+      CardModel(kind: "Diamonds", index: 9, isOpen: false),
+      CardModel(kind: "Diamonds", index: 10, isOpen: false),
+      CardModel(kind: "Diamonds", index: 11, isOpen: false),
+      CardModel(kind: "Diamonds", index: 12, isOpen: false),
+      CardModel(kind: "Diamonds", index: 13, isOpen: false),
+      CardModel(kind: "Diamonds", index: 14, isOpen: false),
+      CardModel(kind: "Hearts", index: 2, isOpen: false),
+      CardModel(kind: "Hearts", index: 3, isOpen: false),
+      CardModel(kind: "Hearts", index: 4, isOpen: false),
+      CardModel(kind: "Hearts", index: 5, isOpen: false),
+      CardModel(kind: "Hearts", index: 6, isOpen: false),
+      CardModel(kind: "Hearts", index: 7, isOpen: false),
+      CardModel(kind: "Hearts", index: 8, isOpen: false),
+      CardModel(kind: "Hearts", index: 9, isOpen: false),
+      CardModel(kind: "Hearts", index: 10, isOpen: false),
+      CardModel(kind: "Hearts", index: 11, isOpen: false),
+      CardModel(kind: "Hearts", index: 12, isOpen: false),
+      CardModel(kind: "Hearts", index: 13, isOpen: false),
+      CardModel(kind: "Hearts", index: 14, isOpen: false),
+      CardModel(kind: "Spades", index: 2, isOpen: false),
+      CardModel(kind: "Spades", index: 3, isOpen: false),
+      CardModel(kind: "Spades", index: 4, isOpen: false),
+      CardModel(kind: "Spades", index: 5, isOpen: false),
+      CardModel(kind: "Spades", index: 6, isOpen: false),
+      CardModel(kind: "Spades", index: 7, isOpen: false),
+      CardModel(kind: "Spades", index: 8, isOpen: false),
+      CardModel(kind: "Spades", index: 9, isOpen: false),
+      CardModel(kind: "Spades", index: 10, isOpen: false),
+      CardModel(kind: "Spades", index: 11, isOpen: false),
+      CardModel(kind: "Spades", index: 12, isOpen: false),
+      CardModel(kind: "Spades", index: 13, isOpen: false),
+      CardModel(kind: "Spades", index: 14, isOpen: false),
+    ] );
     while (cardsForHand1.length < 5) {
-      int indexCard = Random().nextInt(action.deckModel.deckList.length);
-      cardsForHand1.add(action.deckModel.deckList[indexCard]);
-      action.deckModel.deckList.removeAt(indexCard);
+      int indexCard = Random().nextInt(deckModel.deckList.length);
+      cardsForHand1.add(deckModel.deckList[indexCard]);
+     deckModel.deckList.removeAt(indexCard);
     }
     while (cardsForHand2.length < 5) {
-      int indexCard = Random().nextInt(action.deckModel.deckList.length);
-      cardsForHand2.add(action.deckModel.deckList[indexCard]);
-      action.deckModel.deckList.removeAt(indexCard);
+      int indexCard = Random().nextInt(deckModel.deckList.length);
+      cardsForHand2.add(deckModel.deckList[indexCard]);
+      deckModel.deckList.removeAt(indexCard);
     }
     int second = state.players.length - 1;
     String handName1 = defineHandName(cardsForHand1);
     String handName2 = defineHandName(cardsForHand2);
-    return AppState(deckModel: state.deckModel, players: [
+    return AppState(deckModel: deckModel, players: [
       PlayerModel(
           playerChoosenCard: state.players.first.playerChoosenCard,
           playerHand: HandModel(name: handName1, cardlist: cardsForHand1),
@@ -39,7 +94,8 @@ AppState PlayGame(AppState state, dynamic action) {
           isWinner: state.players[second].isWinner,
           handOpen: state.players[second].handOpen)
     ]);
-  } else if (action is DefinePlayerNameAction) {
+  }
+  else if (action is DefinePlayerNameAction) {
     int second = state.players.length - 1;
     List<PlayerModel> playersList = [
       PlayerModel(
@@ -95,7 +151,26 @@ AppState PlayGame(AppState state, dynamic action) {
       }
     }
     return AppState(deckModel: state.deckModel, players: state.players);
-  } else if (action is ComparePlayerAction) {
+  }
+  else if (action is Replay) {
+    List<PlayerModel> playersList = [
+      PlayerModel(
+          playerChoosenCard: [],
+          playerHand: HandModel(name: "",cardlist: []),
+          playerName: state.players.first.playerName,
+          isWinner: false,
+          handOpen: false),
+      PlayerModel(
+          playerChoosenCard: [],
+          playerHand: HandModel(name: "",cardlist: []),
+          playerName: state.players[1].playerName,
+          isWinner: false,
+          handOpen: false)
+    ];
+
+  return AppState(deckModel: state.deckModel, players: playersList);
+  }
+  else if (action is ComparePlayerAction) {
     int maxNumHand1 = maxHandIndex(action.players.first.playerHand.cardlist);
     int maxNumHand2 = maxHandIndex(action.players[1].playerHand.cardlist);
     int winnerIndex = 0;

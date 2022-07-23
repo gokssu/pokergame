@@ -27,7 +27,7 @@ void main() {
             handOpen: false,
           ),
         ], deckModel: DeckModel(deckList: AppStatic.generalList)),
-        DistributeCardsAction(DeckModel(deckList: AppStatic.generalList)));
+        DistributeCardsAction());
 
     expect(distrubitionstate.deckModel.deckList.length, 42);
   });
