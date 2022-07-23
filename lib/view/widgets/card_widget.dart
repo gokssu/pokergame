@@ -8,7 +8,8 @@ class CardWidget extends StatefulWidget {
   bool onTouch=false;
   String image;
   Function chooseCard;
-   CardWidget(this.onTouch,this.image,this.chooseCard);
+  bool compare;
+   CardWidget(this.onTouch,this.image,this.chooseCard,this.compare);
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
@@ -17,12 +18,11 @@ class CardWidget extends StatefulWidget {
 class _CardWidgetState extends State<CardWidget> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        widget.chooseCard();
-      },
-      child: FlipCard(
+    return  FlipCard(
         flipOnTouch:widget.onTouch ,
+        onFlip: (){
+          widget.chooseCard();
+        },
         fill: Fill.fillBack, // Fill the back side of the card to make in the same size as the front.
         direction: FlipDirection.HORIZONTAL, // default
         front:  Container(
@@ -50,11 +50,10 @@ class _CardWidgetState extends State<CardWidget> {
           ),
           padding: EdgeInsets.only(right: 2,),
           child: Image.asset(
-            'assets/back_card.png',
+            widget.compare?widget.image:'assets/back_card.png',
             fit: BoxFit.fitHeight,
           ),
         ),
-      ),
-    );
+      );
   }
 }

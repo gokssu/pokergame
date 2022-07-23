@@ -13,7 +13,8 @@ import 'card_widget.dart';
 
 class HandWidget extends StatefulWidget {
   PlayerModel playerModel;
-  HandWidget(this.playerModel);
+  bool compare;
+  HandWidget(this.playerModel,this.compare);
 
   @override
   State<HandWidget> createState() => _HandWidgetState();
@@ -45,28 +46,28 @@ class _HandWidgetState extends State<HandWidget> {
           bottom: -1,
           child: CardWidget((widget.playerModel.handOpen && handlist[0].isOpen), getImage(0), () {
             addCard(0);
-          }),
+          },widget.compare),
         ),
         Positioned(
           left: context.dynamicMultiWidth(0.15),
           bottom: 4,
           child: CardWidget((widget.playerModel.handOpen && handlist[1].isOpen), getImage(1), () {
             addCard(1);
-          }),
+          },widget.compare),
         ),
         Positioned(
           left: context.dynamicMultiWidth(0.3),
           bottom: 6,
           child: CardWidget((widget.playerModel.handOpen && handlist[2].isOpen), getImage(2), (){
             addCard(2);
-          }),
+          },widget.compare),
         ),
         Positioned(
           left: context.dynamicMultiWidth(0.45),
           bottom: 4,
           child: CardWidget((widget.playerModel.handOpen && handlist[3].isOpen), getImage(3), (){
             addCard(3);
-          }),
+          },widget.compare),
         ),
         Positioned(
           left: context.dynamicMultiWidth(0.6),
@@ -76,7 +77,7 @@ class _HandWidgetState extends State<HandWidget> {
             getImage(4),
                   (){
                 addCard(4);
-              }
+              },widget.compare
           ),
         ),
       ],
