@@ -1,10 +1,10 @@
 # ♣ ♦ pokergame ♥ ♠
 
 
-  <p align="center"><img align="" width="200px" src="https://user-images.githubusercontent.com/26454080/180570364-f144bb1a-5cca-42ad-8939-8e1881caff47.png" />
-  <img align="" width="200px" src="https://user-images.githubusercontent.com/26454080/180570371-9cc9df10-3b0a-4946-bb3a-80c1955159a1.png" />
-  <img align="" width="200px" src="https://user-images.githubusercontent.com/26454080/180570375-d344c183-8ce5-4bb8-84f8-bff7c59eca85.png" />
-  <img align="" width="200px" src="https://user-images.githubusercontent.com/26454080/180570359-047e57cd-370f-422c-adfd-71a0126b3f59.png" />
+  <p align="center"><img align="" width="200px" src="https://user-images.githubusercontent.com/26454080/180609354-727ca246-9384-40d6-ba94-d9cce90b84a2.png" />
+  <img align="" width="200px" src="https://user-images.githubusercontent.com/26454080/180609356-d8ac333a-c594-4bf9-ac25-b0a6b32e406d.png" />
+  <img align="" width="200px" src="https://user-images.githubusercontent.com/26454080/180609358-91982bda-a548-4f8e-b846-b1e5ff8ef9b7.png" />
+  <img align="" width="200px" src="https://user-images.githubusercontent.com/26454080/180609363-5e6c0117-fdd3-466b-8f42-42ef35b79cb2.png" />
 </p>
 <p>
 Its poker game for two players.
