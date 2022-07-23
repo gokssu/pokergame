@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (player1.text != "" && player2.text != ""&&player2.text!=player1.text) {
       StoreProvider.of<AppState>(context).dispatch(DefinePlayerNameAction(player1.text, player2.text),);
       StoreProvider.of<AppState>(context).dispatch(
-        DistributeCardsAction(DeckModel(deckList: AppStatic.generalList)),
+        DistributeCardsAction(),
       );
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => GameScreen()), (route) => false);
     } else {
@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: context.dynamicMultiHeight(0.2),
                 width: context.dynamicMultiHeight(0.2),
                 child: Image.asset(
-                  'assets/logo.png',
+                  'assets/logo.jpg',
                   fit: BoxFit.cover,
                 ),
               ),
